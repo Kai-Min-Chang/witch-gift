@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>今天吃甚麼吶寶寶</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <style>
+            body{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'cwTeXMing',"Helvetica", "Arial","LiHei Pro","黑體-繁","微軟正黑體", sans-serif;
+            }
+            .screen-panel{
+                width: 100%;
+                height: 100vh;
+                position: relative;
+                background-color: #ecd4d4;
+            }
+            .content-panel{
+                position: absolute;
+                top: 45%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 80%;
+                max-width: 800px;
+                min-height: 450px;
+                border-radius: 30px;
+                background-color: #efeff1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            .list-toggle{
+                position: absolute;
+                left: 25px;
+                top: 25px;
+                font-size: 25px;
+            }
+            .food-result{
+                font-size: 1.5rem;
+            }
+            .start-btn{
+                margin-top: 3rem;
+                padding: 10px;
+                border-radius: 10px;
+                border: 2px #ecd4d4 solid;
+                background-color: #ecd4d4;
+                cursor: pointer;
+                user-select:none;
+                color: #212529;
+                box-shadow: 3px 3px 7px 2px rgba(0, 0, 0, 0.212);
+            }
+            .start-btn.disabled{
+                background-color: transparent;
+                border: none;
+                pointer-events: none;
+                color: #212529;
+                box-shadow: none;
+            }
+
+            .list-container{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: #000000ce;
+                opacity: 0;
+                transition-duration: 400ms;
+                pointer-events: none;
+            }
+            .list-container.active{
+                opacity: 1;
+                pointer-events: initial;
+            }
+            .list-toggle-close{
+                color: #ffffff;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                font-size: 25px;
+            }
+            .list-panel{
+                position: absolute;
+                top: 45%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: #fff;
+                width: 80%;
+                max-width: 800px;
+                height: 450px;
+                overflow-y: scroll;
+                padding: 20px;
+            }
+            .list-title{
+                font-size: 24px;
+                margin-top: 0;
+            }
+            .food-list{
+                font-size: 18px;
+            }
+            .food-list li+li{
+                margin-top: 1.5rem;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="screen-panel">
+            <div class="content-panel">
+                <div id="list-toggle" class="list-toggle"><i class="fa-solid fa-bars"></i></div>
+                <div id="food-result" class="food-result">今天要吃甚麼?!</div>
+                <div id="start-btn" class="start-btn">Go!</div>
+            </div>
+            <div id="list-container" class="list-container">
+                <div id="list-toggle-close" class="list-toggle-close"><i class="fa-solid fa-xmark"></i></div>
+                <div class="list-panel">
+                    <p class="list-title">現在清單裡有這些～</p>
+                    <hr>
+                    <ul id="food-list" class="food-list">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        let food_index = [
+            '乾鍋',
+            '麻辣燙',
+            '炸雞',
+            '漢堡',
+            '冒菜',
+            '烤肉',
+            '螺獅粉',
+            '肉夾饃',
+            '豌雜面',
+            '雞公煲',
+            '火鍋',
+            '拌飯'
+        ]
+
+        function random_number(x) {
+            //x上限，y下限     
+            var x = x;
+            var y = 0;
+            var rand = parseInt(Math.random() * (x - y + 1) + y);
+            return rand;
+        }
+
+        for(var i=0; i< food_index.length;i++){
+            $('<li>' + food_index[i] + '</li>').appendTo('#food-list');
+        }
+
+        $('#start-btn').click(function(){
+            let ani = setInterval(() => {
+                $('#food-result').html(food_index[random_number(food_index.length-1)]+'！');
+            }, 20);
+            
+            $('#start-btn').html('洗牌一下...');
+            $('#start-btn').addClass('disabled');
+            setTimeout(() => {
+                clearInterval(ani);
+                $('#start-btn').html('不想吃，再一次');
+            $('#start-btn').removeClass('disabled');
+            }, 1500);
+        })
+
+        $('#list-toggle').click(function(){
+            $('#list-container').addClass('active');
+        })
+
+        $('#list-toggle-close').click(function(){
+            $('#list-container').removeClass('active');
+        })
+    </script>
+</html>
