@@ -114,7 +114,7 @@
         <div class="screen-panel">
             <div class="content-panel">
                 <div id="list-toggle" class="list-toggle"><i class="fa-solid fa-bars"></i></div>
-                <div id="food-result" class="food-result">今天要吃甚麼?!</div>
+                <div id="food-result" class="food-result">送哪個?!</div>
                 <div id="start-btn" class="start-btn">Go!</div>
             </div>
             <div id="list-container" class="list-container">
@@ -132,18 +132,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         let food_index = [
-            '乾鍋',
-            '麻辣燙',
-            '炸雞',
-            '漢堡',
-            '冒菜',
-            '烤肉',
-            '螺獅粉',
-            '肉夾饃',
-            '豌雜面',
-            '雞公煲',
-            '火鍋',
-            '拌飯'
+            '3.0',
+            '5200',
         ]
 
         function random_number(x) {
@@ -167,7 +157,7 @@
             $('#start-btn').addClass('disabled');
             setTimeout(() => {
                 clearInterval(ani);
-                $('#start-btn').html('不想吃，再一次');
+                $('#start-btn').html('再一次');
             $('#start-btn').removeClass('disabled');
             }, 1500);
         })
